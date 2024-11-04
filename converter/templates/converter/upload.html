@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Image</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+        body {
+            background-color: #1e1e2f;
+            color: #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .navbar {
+            width: 100%;
+            background-color: #2a2a40;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between; /* Keep links on the right */
+            align-items: center;
+            border-bottom: 1px solid #444;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar h1 {
+            font-size: 35px;
+            font-weight: 500;
+            color: #ffffff;
+            flex-grow: 0; /* Allow the title to take up remaining space */
+            text-align: center; /* Center the title text */
+        }
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+        .navbar ul li {
+            display: inline;
+        }
+        .navbar ul li a {
+            color: #b3b3cc;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 5px;
+            transition: color 0.3s;
+        }
+        .navbar ul li a:hover {
+            color: #ffffff;
+        }
+        .info-section {
+            background-color: #2a2a40;
+            padding: 20px;
+            margin-top: 20px;
+            width: 100%;
+            text-align: center;
+            color: #c4c4dd;
+        }
+        .container {
+            max-width: 700px;
+            width: 90%;
+            margin-top: 20px;
+            background-color: #2b2b3c;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-size: 26px;
+            font-weight: 500;
+            color: #ffffff;
+            text-align: center;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        button {
+            background-color: #4e8df5;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #3c73cc;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h1> Cloud Converter </h1>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Features</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </div>
+    <div class="info-section">
+        <p><strong>Convert Your Images Easily:</strong> Use this tool to convert your JPG images to high-quality PNG format with a single click. Enjoy fast, reliable, and secure conversions.</p>
+    </div>
+    <div class="container">
+        <h1>Upload Your JPG or JPEG Image</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Choose File & Upload</button>
+        </form>
+    </div>
+</body>
+</html>
