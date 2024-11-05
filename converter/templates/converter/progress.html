@@ -72,6 +72,13 @@
         button:hover {
             background-color: #3c73cc;
         }
+        a {
+            color: #ffffff; /* Change link color to white */
+            text-decoration: none; /* Optional: Remove underline from links */
+        }
+        a:hover {
+            text-decoration: underline; /* Optional: Add underline on hover */
+        }
     </style>
 </head>
 <body>
@@ -89,6 +96,8 @@
         {% else %}
             <p>Your image is still being processed. Please refresh this page later.</p>
         {% endif %}
+        <a href="{% url 'upload_image' %}">Upload Another Image</a>
+
     </div>
 </body>
 </html>
