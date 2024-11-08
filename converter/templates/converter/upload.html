@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload Image</title>
+    <!-- Add Google Fonts & Font Awesome -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -19,13 +20,15 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            min-height: 100vh;
         }
+        /* Navbar Styling */
         .navbar {
             width: 100%;
             background-color: #2a2a40;
             padding: 15px 30px;
             display: flex;
-            justify-content: space-between; /* Keep links on the right */
+            justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid #444;
             position: sticky;
@@ -33,30 +36,27 @@
             z-index: 1000;
         }
         .navbar h1 {
-            font-size: 35px;
+            font-size: 30px;
             font-weight: 500;
             color: #ffffff;
-            flex-grow: 0; /* Allow the title to take up remaining space */
-            text-align: center; /* Center the title text */
         }
         .navbar ul {
             list-style: none;
             display: flex;
             gap: 20px;
         }
-        .navbar ul li {
-            display: inline;
-        }
         .navbar ul li a {
             color: #b3b3cc;
             text-decoration: none;
             font-size: 16px;
             padding: 5px;
-            transition: color 0.3s;
+            transition: color 0.3s ease;
         }
         .navbar ul li a:hover {
             color: #ffffff;
         }
+
+        /* Info Section */
         .info-section {
             background-color: #2a2a40;
             padding: 20px;
@@ -65,6 +65,8 @@
             text-align: center;
             color: #c4c4dd;
         }
+
+        /* Main Container Styling */
         .container {
             max-width: 700px;
             width: 90%;
@@ -94,16 +96,44 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s ease;
         }
         button:hover {
             background-color: #3c73cc;
         }
+
+        /* Success & Error Messages */
+        .error {
+            background-color: #d9534f;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        /* Footer Styling */
+        footer {
+            background-color: #2a2a40;
+            padding: 15px;
+            text-align: center;
+            margin-top: auto;
+            color: #b3b3cc;
+            border-top: 1px solid #444;
+        }
+        footer a {
+            color: #4e8df5;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
+    <!-- Navbar -->
     <div class="navbar">
-        <h1> Cloud Converter </h1>
+        <h1>Cloud Converter</h1>
         <ul>
             <li><a href="#">Home</a></li>
             <li><a href="#">Features</a></li>
@@ -111,37 +141,35 @@
             <li><a href="#">Contact</a></li>
         </ul>
     </div>
+
+    <!-- Info Section -->
     <div class="info-section">
         <p><strong>Convert Your Images Easily:</strong> Use this tool to convert your JPG images to high-quality PNG format with a single click. Enjoy fast, reliable, and secure conversions.</p>
     </div>
+
+    <!-- Main Content Container -->
     <div class="container">
         {% if messages %}
-    <div class="error">
-        {% for message in messages %}
-            <p>{{ message }}</p>
-        {% endfor %}
-    </div>
-{% endif %}
-
-        <!-- {% if form.errors %}
         <div class="error">
-            {% for field in form %}
-                {% for error in field.errors %}
-                    <p>{{ error }}</p>
-                {% endfor %}
-            {% endfor %}
-            {% for error in form.non_field_errors %}
-                <p>{{ error }}</p>
+            {% for message in messages %}
+                <p>{{ message }}</p>
             {% endfor %}
         </div>
-    {% endif %} -->
-    
+        {% endif %}
+
         <h1>Upload Your JPG or JPEG Image</h1>
+        
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit">Choose File & Upload</button>
+            <button type="submit">Upload File</button>
         </form>
     </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Cloud Converter. All rights reserved.</p>
+        <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+    </footer>
 </body>
 </html>

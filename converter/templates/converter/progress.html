@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Progress</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery for AJAX -->
     <style>
         * {
             margin: 0;
@@ -68,6 +69,7 @@
             cursor: pointer;
             font-size: 16px;
             transition: background-color 0.3s;
+            margin-bottom: 15px;
         }
         button:hover {
             background-color: #3c73cc;
@@ -79,6 +81,22 @@
         a:hover {
             text-decoration: underline; /* Optional: Add underline on hover */
         }
+        .btn-upload {
+            display: inline-block;
+            background-color: #4e8df5;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            text-decoration: none; /* Remove underline */
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-upload:hover {
+            background-color: #3c73cc;
+        }
+
     </style>
 </head>
 <body>
@@ -87,17 +105,56 @@
     </div>
     <div class="container">
         <h1>Conversion Status</h1>
-        <p>Status: {{ image.status }}</p>
-        {% if image.converted_image %}
+        <p>Status: <span id="status">{{ image.status }}</span></p>
+
+        <!-- Download Section (Hidden Initially) -->
+        <div id="download-section" style="display:none;">
             <p>Conversion completed! You can download your image below:</p>
-            <a href="{{ image.converted_image.url }}" download>
+            <a id="download-link" href="#" download>
                 <button type="button">Download PNG</button>
             </a>
-        {% else %}
-            <p>Your image is still being processed. Please refresh this page later.</p>
-        {% endif %}
-        <a href="{% url 'upload_image' %}">Upload Another Image</a>
+            
+        </div>
 
-    </div>
+        <!-- Processing Section -->
+        <div id="processing-section">
+            <p>Your image is still being processed. Please wait...</p>
+        </div>
+
+        <a href="{% url 'upload_image' %}" class="btn-upload">
+            Upload Another Image
+        </a>
+            </div>
+
+    <script>
+        // Function to check the conversion status
+        function checkConversionStatus() {
+            $.ajax({
+                url: "{% url 'progress' image.id %}",  // URL to call progress view
+                type: "GET",
+                success: function(data) {
+                    // If conversion is completed, show download link
+                    if (data.status === "completed") {
+                        $('#status').text("Completed");
+                        $('#processing-section').hide();
+                        $('#download-section').show();
+                        $('#download-link').attr("href", data.converted_image_url);
+                    }
+                    else {
+                        $('#status').text("Processing...");
+                        setTimeout(checkConversionStatus, 5000);  // Re-check the status after 5 seconds
+                    }
+                },
+                error: function() {
+                    $('#status').text("Error fetching status");
+                }
+            });
+        }
+
+        // Start the status check as soon as the page loads
+        $(document).ready(function() {
+            checkConversionStatus();
+        });
+    </script>
 </body>
 </html>
